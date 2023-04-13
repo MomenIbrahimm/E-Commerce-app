@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit.dart';
 import 'package:shop_app/layout/state.dart';
+import 'package:shop_app/modules/cart_screen.dart';
 import 'package:shop_app/share/components/components.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -45,22 +46,10 @@ class ProductDetails extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: IconButton(
-                    onPressed: () {},
-                    icon: ShopCubit.get(context).favourites[
-                                ShopCubit.get(context)
-                                    .homeModel!
-                                    .data!
-                                    .products[currentIndex]
-                                    .id] ==
-                            true
-                        ? const Icon(
-                            EvaIcons.heart,
-                            color: Colors.deepPurple,
-                          )
-                        : const Icon(
-                            EvaIcons.heartOutline,
-                            color: Colors.deepPurple,
-                          )),
+                    onPressed: () {
+                      navigateTo(context, const CartScreen());
+                    },
+                    icon:const Icon(EvaIcons.shoppingCart) )
               )
             ],
           ),
@@ -71,12 +60,32 @@ class ProductDetails extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
-                      height: 50.0,
+                    Row(
+                      children: [
+                        Expanded(child:   defaultText(
+                            text: model!.data!.products[currentIndex].name,
+                            fontWeight: FontWeight.bold),),
+                        IconButton(
+                            onPressed: () {
+                              ShopCubit.get(context).changeFavourites(ShopCubit.get(context).homeModel!.data!.products[currentIndex].id);
+                            },
+                            icon: ShopCubit.get(context).favourites[
+                            ShopCubit.get(context)
+                                .homeModel!
+                                .data!
+                                .products[currentIndex]
+                                .id] ==
+                                true
+                                ? const Icon(
+                              EvaIcons.heart,
+                              color: Colors.deepPurple,
+                            )
+                                : const Icon(
+                              EvaIcons.heartOutline,
+                              color: Colors.deepPurple,
+                            ))
+                      ],
                     ),
-                    defaultText(
-                        text: model!.data!.products[currentIndex].name,
-                        fontWeight: FontWeight.bold),
                     const SizedBox(
                       height: 10.0,
                     ),
