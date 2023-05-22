@@ -41,7 +41,7 @@ class ProductScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: GridView.count(
               crossAxisCount: 2,
-              childAspectRatio: 1 / 2,
+              childAspectRatio: 1 / 1.6,
               crossAxisSpacing: 10.0,
               mainAxisSpacing: 10.0,
               children: List.generate(model!.data!.products.length,
@@ -59,17 +59,24 @@ Widget buildProductItem(HomeModel model, index, context) {
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0), color: Colors.deepPurple[100]),
     child: Stack(
-      alignment: Alignment.bottomCenter,
+      alignment: Alignment.bottomLeft,
       children: [
         Column(
           children: [
             SizedBox(
-              height: 200.0,
+              height: 120.0,
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                child: Image(
-                  image: NetworkImage('${model.data?.products[index].image}'),
+                    const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0)
+                  ),
+                  child: Image(
+                    image: NetworkImage('${model.data?.products[index].image}',),
+                  ),
                 ),
               ),
             ),
@@ -89,7 +96,7 @@ Widget buildProductItem(HomeModel model, index, context) {
               ),
             ),
             const SizedBox(
-              height: 5.0,
+              height: 10.0,
             ),
             Expanded(
               child: Text(
@@ -103,9 +110,7 @@ Widget buildProductItem(HomeModel model, index, context) {
                     color: Colors.black),
               ),
             ),
-            const SizedBox(
-              height: 5.0,
-            ),
+
             if (model.data!.products[index].discount != 0)
               defaultText(
                   text: '${model.data?.products[index].discount}% discount',
@@ -129,7 +134,9 @@ Widget buildProductItem(HomeModel model, index, context) {
                         color: Colors.deepPurple,
                         size: 25.0,
                       )),
+
                   const Spacer(),
+
                   IconButton(
                       onPressed: () {
                         navigateTo(

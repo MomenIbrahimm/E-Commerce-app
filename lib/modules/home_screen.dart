@@ -89,7 +89,7 @@ class HomeScreen extends StatelessWidget {
             child: CarouselSlider(
                 items: model.data!.banners.map((e) {
                   return Image(
-                      image: e.image != null
+                      image: e.image!.isNotEmpty
                           ? NetworkImage(e.image!)
                           : const NetworkImage(
                               'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png'));

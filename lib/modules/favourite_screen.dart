@@ -60,7 +60,7 @@ class FavouriteScreen extends StatelessWidget {
 buildFavoriteItem(model, context ,int index) {
   return SizedBox(
     width: double.infinity,
-    height: 150.0,
+    height: 160.0,
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4.0),
       child: Stack(
@@ -130,12 +130,12 @@ buildFavoriteItem(model, context ,int index) {
                                     true
                                 ? const Icon(
                                     EvaIcons.star,
-                                    color: Colors.amber,
+                                    color: Colors.deepPurple,
                                     size: 22.5,
                                   )
                                 : const Icon(
                                     EvaIcons.starOutline,
-                                    color: Colors.amber,
+                                    color: Colors.deepPurple,
                                     size: 22.5,
                                   )),
                         const Spacer(),
