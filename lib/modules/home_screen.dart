@@ -19,22 +19,23 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopState>(
       listener: (context, state) {
-        if(state is GetProfileDataSuccess)
-          {
-            if(state.userModel.data != null)
-              {
-                ShopCubit.get(context).getProfileData();
-              }
+        if (state is GetProfileDataSuccess) {
+          if (state.userModel.data != null) {
+            ShopCubit.get(context).getProfileData();
           }
+        }
       },
       builder: (context, state) {
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20),
             child: BuildCondition(
-              condition: ShopCubit.get(context).homeModel != null && ShopCubit.get(context).userModel != null,
-              builder: (context) =>
-                  homeBuilder(ShopCubit.get(context).homeModel!, context,ShopCubit.get(context).userModel!),
+              condition: ShopCubit.get(context).homeModel != null &&
+                  ShopCubit.get(context).userModel != null,
+              builder: (context) => homeBuilder(
+                  ShopCubit.get(context).homeModel!,
+                  context,
+                  ShopCubit.get(context).userModel!),
               fallback: (context) =>
                   const Center(child: CircularProgressIndicator()),
             ),
@@ -44,7 +45,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget homeBuilder(HomeModel model, context,LoginModel loginModel) {
+  Widget homeBuilder(HomeModel model, context, LoginModel loginModel) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                 backgroundColor: Colors.deepPurple,
                 child: IconButton(
                     onPressed: () {
-                      navigateTo(context,CartScreen());
+                      navigateTo(context, const CartScreen());
                     },
                     icon: const Icon(
                       EvaIcons.shoppingCartOutline,
@@ -87,7 +88,11 @@ class HomeScreen extends StatelessWidget {
             width: double.infinity,
             child: CarouselSlider(
                 items: model.data!.banners.map((e) {
-                  return Image(image: NetworkImage(e.image!));
+                  return Image(
+                      image: e.image != null
+                          ? NetworkImage(e.image!)
+                          : const NetworkImage(
+                              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png'));
                 }).toList(),
                 options: CarouselOptions(
                   height: 180,
@@ -215,12 +220,10 @@ class HomeScreen extends StatelessWidget {
                   if (model.data!.products[index].discount != 0)
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(15.0)
-                      ),
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(15.0)),
                       width: 70.0,
                       height: 18.0,
-
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5.0),
                         child: defaultText(

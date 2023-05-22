@@ -2,10 +2,11 @@ import 'package:buildcondition/buildcondition.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shop_app/layout/cubit.dart';
 import 'package:shop_app/layout/state.dart';
 import 'package:shop_app/modules/update_screen.dart';
-import 'package:shop_app/share/network/remote/cach_helper.dart';
+import '../modules/animation.dart';
 import '../share/components/components.dart';
 
 class LayoutScreen extends StatelessWidget {
@@ -31,18 +32,7 @@ class LayoutScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(
-                          height: 50.0,
-                        ),
-                        Container(
-                          width: 130.0,
-                          height: 130.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100.0),
-                            image: const DecorationImage(
-                                image: NetworkImage(
-                                    'https://scontent.fcai21-4.fna.fbcdn.net/v/t1.6435-9/173275350_3976522115731723_2630501664218342178_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=BNyIQx2oKucAX8P7T3g&_nc_ht=scontent.fcai21-4.fna&oh=00_AfAY5WgjnNPzhhTR2Bc_MG2hMcGdshVsNVdlHqGMkau3jQ&oe=64463818'),
-                                fit: BoxFit.cover),
-                          ),
+                          height: 40.0,
                         ),
                         const SizedBox(
                           height: 30.0,
@@ -68,7 +58,8 @@ class LayoutScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: InkWell(
                             onTap: () {
-                              navigateTo(context, UpdateScreen());
+                              Navigator.of(context)
+                                  .push(SlideAnimate(page: UpdateScreen()));
                             },
                             child: Row(
                               children: [
@@ -86,24 +77,24 @@ class LayoutScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10.0,
                         ),
-                        Row(
-                          children: [
-                            Switch(
-                                value: ShopCubit.get(context).isSwitch,
-                                onChanged: (value) {
-                                  CacheHelper.saveData(key: 'isDark', value: value).then((value){
-                                    ShopCubit.get(context).switchChange();
-                                  });
-                                }),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            defaultText(text: 'Dark mode', color: Colors.white),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Switch(
+                        //         value: ShopCubit.get(context).isSwitch,
+                        //         onChanged: (value) {
+                        //           CacheHelper.saveData(key: 'isDark', value: value).then((value){
+                        //             ShopCubit.get(context).switchChange();
+                        //           });
+                        //         }),
+                        //     const SizedBox(
+                        //       width: 10.0,
+                        //     ),
+                        //     defaultText(text: 'Dark mode', color: Colors.white),
+                        //   ],
+                        // ),
+                        // const SizedBox(
+                        //   height: 10.0,
+                        // ),
                         InkWell(
                           onTap: () {
                             signOut(context);
@@ -144,7 +135,7 @@ class LayoutScreen extends StatelessWidget {
                 ),
               ),
               fallback: (context) =>
-                  const Center(child: CircularProgressIndicator()),
+                   Center(child:  Center(child: LottieBuilder.asset('assets/loader.json')),),
             ),
             bottomNavigationBar: Container(
               margin: const EdgeInsets.all(20.0),
@@ -188,7 +179,7 @@ class LayoutScreen extends StatelessWidget {
               builder: (context) => ShopCubit.get(context)
                   .screens[ShopCubit.get(context).currentIndex],
               fallback: (context) =>
-                  const Center(child: CircularProgressIndicator()),
+                  Center(child:  Center(child: LottieBuilder.asset('assets/loader.json',height: 150.0,width: 150.0,)),),
             ));
       },
     );

@@ -1,6 +1,4 @@
 import 'package:shop_app/model/change_cart_model.dart';
-import 'package:shop_app/modules/favourite_screen.dart';
-
 import '../model/favorite/change_favorite_model.dart';
 import '../model/login_model.dart';
 
@@ -13,6 +11,10 @@ class ChangeBottomNav extends ShopState{}
 class IncreaseCounter extends ShopState{}
 
 class DecreaseCounter extends ShopState{}
+
+class ChangeAnimatedState extends ShopState{}
+
+// class SliderState extends ShopState{}
 
 class SwitchChanged extends ShopState{}
 
@@ -125,7 +127,7 @@ class GetProfileDataError extends ShopState{
 }
 
 class UpdateProfileLoadingState extends ShopState{}
-
 class UpdateProfileSuccessState extends ShopState{}
-
 class UpdateProfileErrorState extends ShopState{}
+
+class IsSwitchCheckState extends ShopState{}

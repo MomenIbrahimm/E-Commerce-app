@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shop_app/modules/login_screen/login_screen.dart';
 import 'package:shop_app/share/components/components.dart';
 import 'package:shop_app/share/network/remote/cach_helper.dart';
@@ -15,11 +16,11 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<OnBoardModel> boardList = [
-    OnBoardModel('assets/image2.jpg', 'See the product',
+    OnBoardModel('assets/1.json', 'See the product',
         'Lorem ipsum dolor sit armet, consectetur adipiscing elit.Sed eget libero feugiat, faucibus libero id, scelerisque quam'),
-    OnBoardModel('assets/onBoard1.jpg', 'And see the details',
+    OnBoardModel('assets/2.json', 'And see the details',
         'Lorem ipsum dolor sit armet, consectetur adipiscing elit.Sed eget libero feugiat, faucibus libero id, scelerisque quam'),
-    OnBoardModel('assets/onBoard3.jpg', 'Buy it if suitable for you',
+    OnBoardModel('assets/3.json', 'Buy it if suitable for you',
         'Lorem ipsum dolor sit armet, consectetur adipiscing elit.Sed eget libero feugiat, faucibus libero id, scelerisque quam'),
   ];
 
@@ -66,14 +67,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           model.title,
           style: Theme.of(context).textTheme.bodyLarge,
         )),
-        Expanded(
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage(model.image)),
-            ),
-          ),
-        ),
+
+        Expanded(child: Lottie.asset(model.image)),
         const SizedBox(
           height: 20.0,
         ),

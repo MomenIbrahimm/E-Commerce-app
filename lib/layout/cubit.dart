@@ -40,13 +40,38 @@ class ShopCubit extends Cubit<ShopState> {
     emit(DecreaseCounter());
   }
 
-  bool isSwitch=false;
-  void switchChange({bool? fromShared}){
-    if(fromShared != null)
-      {
-        isSwitch = fromShared;
-      }else{
-      isSwitch =!isSwitch;
+  double containerWidth= 100.0;
+  double containerHeight= 100.0;
+  bool isDefault = true;
+
+  void changeContainer(){
+    if(isDefault){
+       containerWidth= 200.0;
+       containerHeight= 200.0;
+       isDefault = !isDefault;
+    }else{
+      containerHeight = 100.0;
+      containerWidth = 100.0;
+      isDefault = !isDefault;
+    }
+
+    emit(ChangeAnimatedState());
+  }
+
+  // double val = 0;
+  //
+  // void slid(value){
+  //   val = value;
+  //   emit(SliderState());
+  // }
+
+  bool isSwitch = false;
+
+  void switchChange({bool? fromShared}) {
+    if (fromShared != null) {
+      isSwitch = fromShared;
+    } else {
+      isSwitch = !isSwitch;
     }
     emit(SwitchChanged());
   }
@@ -56,7 +81,7 @@ class ShopCubit extends Cubit<ShopState> {
     emit(ChangeBottomNav());
   }
 
-  List<Widget> screens =[
+  List<Widget> screens = [
     const HomeScreen(),
     const ProductScreen(),
     const CategoryScreen(),
@@ -75,7 +100,7 @@ class ShopCubit extends Cubit<ShopState> {
     ).then((value) {
       userModel = LoginModel.fromJson(value.data);
       emit(GetProfileDataSuccess(userModel!));
-    }).catchError((error){
+    }).catchError((error) {
       emit(GetProfileDataError(error.toString()));
     });
   }
@@ -161,7 +186,6 @@ class ShopCubit extends Cubit<ShopState> {
     DioHelper.getData(url: categories, token: token).then((value) {
       categoryModel = CategoryModel.fromJson(value.data);
       emit(GetCategoriesDataSuccess());
-      print(categoryModel!.status);
     }).catchError((error) {
       emit(GetCategoriesDataError(error.toString()));
     });
@@ -170,12 +194,14 @@ class ShopCubit extends Cubit<ShopState> {
   SettingsModel? settingsModel;
 
   getDataSetting() {
+
+    emit(GetSettingsDataLoading());
+
     DioHelper.getData(
       url: settings,
       token: token,
     ).then((value) {
       settingsModel = SettingsModel.fromJson(value.data);
-      print(settingsModel!.data!.terms!.toString());
       emit(GetSettingsDataSuccess());
     }).catchError((error) {
       emit(GetSettingsDataError(error.toString()));
@@ -184,8 +210,7 @@ class ShopCubit extends Cubit<ShopState> {
 
   PostCartModel? postCartModel;
 
- void addCart(productId) {
-
+  void addCart(productId) {
     listCarts[productId] = !listCarts[productId]!;
 
     emit(ChangePostIcon());
@@ -194,14 +219,12 @@ class ShopCubit extends Cubit<ShopState> {
       'product_id': productId,
     }).then((value) {
       postCartModel = PostCartModel.fromJson(value.data);
-      print(postCartModel!.message);
       if (postCartModel!.status == false) {
         listCarts[productId] = !listCarts[productId]!;
       } else {
         getCartsData();
         emit(PostCartItemSuccess(postCartModel!));
       }
-
     }).catchError((error) {
       listCarts[productId] = !listCarts[productId]!;
       emit(PostCartItemError(error.toString()));
@@ -219,7 +242,6 @@ class ShopCubit extends Cubit<ShopState> {
       token: token,
     ).then((value) {
       getCartsModel = GetCartsModel.fromJson(value.data);
-      print(getCartsModel!.data!.total!);
       emit(GetCartsDataSuccess());
     }).catchError((error) {
       emit(GetCartsDataError(error.toString()));
@@ -227,12 +249,11 @@ class ShopCubit extends Cubit<ShopState> {
     });
   }
 
- void updateProfile({
-    required String  name,
+  void updateProfile({
+    required String name,
     required String phone,
     required String email,
   }) {
-
     emit(UpdateProfileLoadingState());
 
     DioHelper.putData(url: update, token: token, data: {
@@ -242,11 +263,23 @@ class ShopCubit extends Cubit<ShopState> {
     }).then((value) {
       userModel = LoginModel.fromJson(value.data);
       emit(UpdateProfileSuccessState());
-      print(userModel!.data!.name);
-      print('Data saved');
     }).catchError((error) {
       emit(UpdateProfileErrorState());
       print(error.toString());
     });
   }
+
+  // bool isSwitchCheck = false;
+  // final LocalAuthApi fingerPrint = LocalAuthApi();
+  //
+  // void enableFingerPrint(value)async{
+  //   if(value){
+  //     bool isFingerPrintEnabled = await fingerPrint.isFingerPrintEnabled();
+  //     if(isFingerPrintEnabled){
+  //     }
+  //   }else{
+  //   }
+  //   isSwitchCheck = value;
+  //   emit(IsSwitchCheckState());
+  // }
 }

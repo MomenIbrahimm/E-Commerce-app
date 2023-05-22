@@ -3,6 +3,7 @@ import 'package:buildcondition/buildcondition.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shop_app/layout/cubit.dart';
 import 'package:shop_app/layout/state.dart';
 import 'package:shop_app/model/favorite/get_favorite_model.dart';
@@ -48,7 +49,7 @@ class FavouriteScreen extends StatelessWidget {
                   ShopCubit.get(context).favoriteModel!.data!.data!.length,
             ),
             fallback: (context) =>
-                const Center(child: CircularProgressIndicator()),
+                 Center(child: LottieBuilder.asset('assets/loader.json')),
           ),
         );
       },

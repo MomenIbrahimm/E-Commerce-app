@@ -1,9 +1,11 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:buildcondition/buildcondition.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shop_app/layout/layout_screen.dart';
+import 'package:shop_app/modules/animation.dart';
+import 'package:shop_app/modules/finger_print.dart';
 import 'package:shop_app/modules/register_screen/register_screen.dart';
 import 'package:shop_app/share/components/components.dart';
 import 'package:shop_app/modules/login_screen/login_cubit.dart';
@@ -19,6 +21,7 @@ class LoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
   late SnackBar successSnackBar;
   late SnackBar errorSnackBar;
+  String fPrint = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +35,10 @@ class LoginScreen extends StatelessWidget {
               CacheHelper.saveData(
                       key: 'token', value: state.loginModel.data!.token)
                   .then((value) {
+
                 token = state.loginModel.data!.token!;
-                navigateToAndFinish(context, const LayoutScreen());
+                Navigator.of(context)
+                    .pushAndRemoveUntil(SlideAnimate(page: const LayoutScreen()),(route) => false,);
 
                 successSnackBar = snackBar(
                     message: state.loginModel.message,
@@ -64,20 +69,18 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 100.0,
                       ),
+
                       defaultText(
                         text: 'User Login',
                         size: 30,
                       ),
-                      const SizedBox(
-                        height: 10,
+
+                      Lottie.asset(
+                        'assets/login.json',
+                        height: 170.0,
+                        width: double.infinity,
                       ),
-                      const Icon(
-                        EvaIcons.logIn,
-                        size: 50.0,
-                      ),
-                      const SizedBox(
-                        height: 70.0,
-                      ),
+
                       defaultTextFormField(
                         controller: emailController,
                         context: context,
@@ -86,9 +89,11 @@ class LoginScreen extends StatelessWidget {
                         icon: const Icon(EvaIcons.email),
                         validateText: 'email field is empty',
                       ),
+
                       const SizedBox(
                         height: 20.0,
                       ),
+
                       defaultTextFormField(
                         controller: passController,
                         context: context,
@@ -103,25 +108,43 @@ class LoginScreen extends StatelessWidget {
                             },
                             icon: Icon(ShopLoginCubit.get(context).suffix)),
                       ),
-                      BuildCondition(
-                        condition: state is! ShopLoginLoadingState,
-                        builder: (context) => defaultMaterialButton(
-                            onPressed: () {
-                              if (formKey.currentState!.validate()) {
-                                ShopLoginCubit.get(context).userLogin(
-                                  email: emailController.text,
-                                  password: passController.text,
-                                );
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: state is ShopLoginLoadingState
+                            ? const Center(child: CircularProgressIndicator())
+                            : defaultMaterialButton(
+                                onPressed: () {
+                                  if (formKey.currentState!.validate()) {
+                                    ShopLoginCubit.get(context).userLogin(
+                                      email: emailController.text,
+                                      password: passController.text,
+                                    );
+                                  }
+                                },
+                                text: 'LOGIN',
+                                context: context,
+                                width: 180),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: defaultMaterialButton(
+                            onPressed: () async {
+                              final isAuthenticated =
+                                  await LocalAuthApi.authenticate();
+                              if (isAuthenticated) {
+                                Navigator.of(context).push(
+                                    SlideAnimate(page: const LayoutScreen()));
                               }
                             },
-                            text: 'LOGIN',
-                            context: context,
-                            width: 180),
-                        fallback: (context) => const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Center(child: CircularProgressIndicator()),
-                        ),
+                            text: 'Login With FingerPrint',
+                            width: 200),
                       ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -135,7 +158,7 @@ class LoginScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               size: 17.0)
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),

@@ -41,6 +41,9 @@ dependencies:
   awesome_snackbar_content: ^0.1.2
   shared_preferences: ^2.0.18
   carousel_slider: ^4.2.1
+  local_auth: ^2.1.6
+  lottie: ^2.3.2
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -71,9 +74,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/image2.jpg
-    - assets/onBoard1.jpg
-    - assets/onBoard3.jpg
+    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

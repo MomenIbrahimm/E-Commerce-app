@@ -16,23 +16,20 @@ Widget defaultMaterialButton({
   bool isUpperCase = false,
 }) {
   return Center(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30.0),
-      child: Container(
-        width: width,
-        height: high,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          color: color,
-        ),
-        child: MaterialButton(
-          onPressed: () {
-            onPressed();
-          },
-          child: Text(
-            isUpperCase ? text.toUpperCase() : text,
-            style: TextStyle(color: textColor, fontSize: 16.0),
-          ),
+    child: Container(
+      width: width,
+      height: high,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        color: color,
+      ),
+      child: MaterialButton(
+        onPressed: () {
+          onPressed();
+        },
+        child: Text(
+          isUpperCase ? text.toUpperCase() : text,
+          style: TextStyle(color: textColor, fontSize: 16.0),
         ),
       ),
     ),
@@ -42,6 +39,7 @@ Widget defaultMaterialButton({
 void signOut(context) {
   CacheHelper.removeData(key: 'token').then((value) {
     if (value == true) {
+      token = '';
       navigateToAndFinish(context, LoginScreen());
     }
   });

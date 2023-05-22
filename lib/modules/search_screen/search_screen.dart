@@ -113,8 +113,8 @@ buildSearchItem(model, context ,int index) {
                         style: const TextStyle(color: Colors.black),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
                           'EGP',
                           style: TextStyle(

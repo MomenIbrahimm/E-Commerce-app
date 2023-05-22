@@ -87,7 +87,6 @@ class CartScreen extends StatelessWidget {
 buildCartItem(CartItems model, context,currentIndex) {
   return SizedBox(
     width: double.infinity,
-    height: 260.0,
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Card(
@@ -115,9 +114,7 @@ buildCartItem(CartItems model, context,currentIndex) {
                     style: const TextStyle(color: Colors.black),
                   ),
                 ),
-                const SizedBox(
-                  height: 25.0,
-                ),
+
                 Row(
                   children: [
                     Padding(
@@ -163,7 +160,11 @@ buildCartItem(CartItems model, context,currentIndex) {
                     // }, icon: const Icon(Icons.delete,size: 25.0,))
                   ],
                 ),
-                defaultMaterialButton(onPressed: () {}, text: 'check out'),
+                const SizedBox(height: 20.0,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: defaultMaterialButton(onPressed: () {}, text: 'check out'),
+                ),
               ],
             ),
           )

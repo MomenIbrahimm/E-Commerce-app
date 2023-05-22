@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit.dart';
 import 'package:shop_app/layout/layout_screen.dart';
@@ -9,12 +10,16 @@ import 'package:shop_app/share/bloc_observe.dart';
 import 'package:shop_app/share/network/remote/cach_helper.dart';
 import 'package:shop_app/share/network/remote/dio_helper.dart';
 import 'package:shop_app/share/style/const.dart';
-
 import 'modules/on_boarding_screen.dart';
 
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
+
 
   DioHelper.init();
   Bloc.observer = MyBlocObserver();

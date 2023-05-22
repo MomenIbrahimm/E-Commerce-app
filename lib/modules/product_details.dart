@@ -28,7 +28,7 @@ class ProductDetails extends StatelessWidget {
                 contentType: ContentType.success,
                 seconds: 2);
             ScaffoldMessenger.of(context).showSnackBar(successSnackBar);
-          }else{
+          } else {
             final errorSnackBar = snackBar(
                 message: state.postCartModel.message,
                 title: 'Done!',
@@ -44,13 +44,12 @@ class ProductDetails extends StatelessWidget {
             iconTheme: const IconThemeData(color: Colors.deepPurple),
             actions: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                    onPressed: () {
-                      navigateTo(context, const CartScreen());
-                    },
-                    icon:const Icon(EvaIcons.shoppingCart) )
-              )
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                      onPressed: () {
+                        navigateTo(context, const CartScreen());
+                      },
+                      icon: const Icon(EvaIcons.shoppingCart)))
             ],
           ),
           body: Center(
@@ -62,28 +61,35 @@ class ProductDetails extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Expanded(child:   defaultText(
-                            text: model!.data!.products[currentIndex].name,
-                            fontWeight: FontWeight.bold),),
+                        Expanded(
+                          child: defaultText(
+                              text: model!.data!.products[currentIndex].name,
+                              fontWeight: FontWeight.bold),
+                        ),
                         IconButton(
                             onPressed: () {
-                              ShopCubit.get(context).changeFavourites(ShopCubit.get(context).homeModel!.data!.products[currentIndex].id);
+                              ShopCubit.get(context).changeFavourites(
+                                  ShopCubit.get(context)
+                                      .homeModel!
+                                      .data!
+                                      .products[currentIndex]
+                                      .id);
                             },
                             icon: ShopCubit.get(context).favourites[
-                            ShopCubit.get(context)
-                                .homeModel!
-                                .data!
-                                .products[currentIndex]
-                                .id] ==
-                                true
+                                        ShopCubit.get(context)
+                                            .homeModel!
+                                            .data!
+                                            .products[currentIndex]
+                                            .id] ==
+                                    true
                                 ? const Icon(
-                              EvaIcons.heart,
-                              color: Colors.deepPurple,
-                            )
+                                    EvaIcons.heart,
+                                    color: Colors.deepPurple,
+                                  )
                                 : const Icon(
-                              EvaIcons.heartOutline,
-                              color: Colors.deepPurple,
-                            ))
+                                    EvaIcons.heartOutline,
+                                    color: Colors.deepPurple,
+                                  ))
                       ],
                     ),
                     const SizedBox(
@@ -100,7 +106,7 @@ class ProductDetails extends StatelessWidget {
                       Center(
                         child: defaultText(
                             text:
-                            'EGP ${model.data!.products[currentIndex].oldPrice}'),
+                                'EGP ${model.data!.products[currentIndex].oldPrice}'),
                       ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -157,15 +163,30 @@ class ProductDetails extends StatelessWidget {
                           )
                       ]),
                     ),
-                      defaultMaterialButton(
-                      onPressed: () {
-                        ShopCubit.get(context)
-                            .addCart(model.data!.products[currentIndex].id);
-                      },
-                      text: ShopCubit.get(context).listCarts[model.data!.products[currentIndex].id]==false?'Add to Cart' : 'Delete From Cart',
-                      high: 50.0,
-                      width: 160.0,
-                    ),
+                    AnimatedCrossFade(
+                        firstChild: defaultMaterialButton(
+                          onPressed: () {
+                            ShopCubit.get(context)
+                                .addCart(model.data!.products[currentIndex].id);
+                          },
+                          text: 'Add to Cart',
+                          high: 50.0,
+                          width: 160.0,
+                        ),
+                        secondChild: defaultMaterialButton(
+                          onPressed: () {
+                            ShopCubit.get(context)
+                                .addCart(model.data!.products[currentIndex].id);
+                          },
+                          text: 'Delete from Cart',
+                          high: 50.0,
+                          width: 160.0,
+                        ),
+                        crossFadeState:ShopCubit.get(context).listCarts[
+                        model.data!.products[currentIndex].id] ==
+                            false? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                        duration: const Duration(seconds: 1)),
+                    const SizedBox(height: 10.0,),
                     defaultText(
                         text: model.data!.products[currentIndex].description,
                         size: 14),
