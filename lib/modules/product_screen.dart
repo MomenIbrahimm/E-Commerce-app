@@ -7,6 +7,7 @@ import 'package:shop_app/layout/state.dart';
 import 'package:shop_app/model/home_model.dart';
 import 'package:shop_app/modules/product_details.dart';
 import '../share/components/components.dart';
+import 'animation.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({Key? key}) : super(key: key);
@@ -37,15 +38,18 @@ class ProductScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: 1 / 1.6,
-              crossAxisSpacing: 10.0,
-              mainAxisSpacing: 10.0,
-              children: List.generate(model!.data!.products.length,
-                  (index) => buildProductItem(model, index, context)),
+          body: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 1 / 1.6,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                children: List.generate(model!.data!.products.length,
+                    (index) => buildProductItem(model, index, context)),
+              ),
             ),
           ),
         );
@@ -139,8 +143,7 @@ Widget buildProductItem(HomeModel model, index, context) {
 
                   IconButton(
                       onPressed: () {
-                        navigateTo(
-                            context, ProductDetails(currentIndex: index));
+                        Navigator.of(context).push(SlideAnimate(page: ProductDetails(currentIndex: index)));
                       },
                       icon: const Icon(
                         EvaIcons.moreHorizontalOutline,
@@ -162,7 +165,7 @@ Widget buildProductItem(HomeModel model, index, context) {
               width: 70.0,
               height: 19.0,
               child:
-                  defaultText(text: ' discount%', color: Colors.white, size: 15.0),
+                  defaultText(text: '    خصم%', color: Colors.white, size: 15.0),
             ),
           ),
       ],

@@ -60,7 +60,7 @@ class FavouriteScreen extends StatelessWidget {
 buildFavoriteItem(model, context ,int index) {
   return SizedBox(
     width: double.infinity,
-    height: 160.0,
+    height: 175.0,
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4.0),
       child: Stack(
@@ -118,40 +118,43 @@ buildFavoriteItem(model, context ,int index) {
                             fontWeight: FontWeight.bold),
                       ),
                     const Spacer(),
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              ShopCubit.get(context).changeFavourites(
-                                  model.product!.id!);
-                            },
-                            icon: ShopCubit.get(context).favourites[
-                                        model.product!.id] ==
-                                    true
-                                ? const Icon(
-                                    EvaIcons.star,
-                                    color: Colors.deepPurple,
-                                    size: 22.5,
-                                  )
-                                : const Icon(
-                                    EvaIcons.starOutline,
-                                    color: Colors.deepPurple,
-                                    size: 22.5,
-                                  )),
-                        const Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              navigateTo(
-                                  context,
-                                  ProductDetails(
-                                    currentIndex: index,
-                                  ));
-                            },
-                            icon: const Icon(
-                              EvaIcons.moreVertical,
-                              size: 20.0,
-                            ))
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                ShopCubit.get(context).changeFavourites(
+                                    model.product!.id!);
+                              },
+                              icon: ShopCubit.get(context).favourites[
+                                          model.product!.id] ==
+                                      true
+                                  ? const Icon(
+                                      EvaIcons.star,
+                                      color: Colors.deepPurple,
+                                      size: 22.5,
+                                    )
+                                  : const Icon(
+                                      EvaIcons.starOutline,
+                                      color: Colors.deepPurple,
+                                      size: 22.5,
+                                    )),
+                          const Spacer(),
+                          IconButton(
+                              onPressed: () {
+                                navigateTo(
+                                    context,
+                                    ProductDetails(
+                                      currentIndex: index,
+                                    ));
+                              },
+                              icon: const Icon(
+                                EvaIcons.moreVertical,
+                                size: 20.0,
+                              ))
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -160,16 +163,18 @@ buildFavoriteItem(model, context ,int index) {
           ),
           if (model.product!.discount != 0)
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(7.5),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(6.0),
                   color: Colors.redAccent,
                 ),
-                height: 15,
+                height: 20,
                 width: 60,
-                child: defaultText(
-                    text: ' SALE %', color: Colors.white, size: 15.0),
+               child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: defaultText(
+                    text: ' خصم %', color: Colors.white, size: 15.0),)
               ),
             )
         ],

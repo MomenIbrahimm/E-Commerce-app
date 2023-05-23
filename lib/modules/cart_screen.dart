@@ -19,14 +19,14 @@ class CartScreen extends StatelessWidget {
           if (state.postCartModel.status == true) {
             final successSnackBar = snackBar(
                 message: state.postCartModel.message,
-                title: 'Done!',
+                title: 'حسنا!',
                 contentType: ContentType.success,
                 seconds: 2);
             ScaffoldMessenger.of(context).showSnackBar(successSnackBar);
           }else{
             final errorSnackBar = snackBar(
                 message: state.postCartModel.message,
-                title: 'Done!',
+                title: 'حسنا!',
                 contentType: ContentType.failure,
                 seconds: 2);
             ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
@@ -38,7 +38,9 @@ class CartScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            iconTheme: const IconThemeData(color: Colors.deepPurple),
+           leading: IconButton(onPressed: (){
+             Navigator.pop(context);
+           }, icon: const Icon(EvaIcons.arrowIosBackOutline,color: Colors.deepPurple,)),
             title: const Text(
               'My Cart',
               style:

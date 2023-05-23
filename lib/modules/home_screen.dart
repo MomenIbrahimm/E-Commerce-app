@@ -7,6 +7,7 @@ import 'package:shop_app/layout/cubit.dart';
 import 'package:shop_app/layout/state.dart';
 import 'package:shop_app/model/home_model.dart';
 import 'package:shop_app/model/login_model.dart';
+import 'package:shop_app/modules/animation.dart';
 import 'package:shop_app/modules/cart_screen.dart';
 import 'package:shop_app/modules/product_details.dart';
 
@@ -56,7 +57,7 @@ class HomeScreen extends StatelessWidget {
           Row(
             children: [
               defaultText(
-                text: 'Hi!',
+                text: 'مرحبا!',
                 size: 20.0,
                 fontWeight: FontWeight.w500,
               ),
@@ -77,7 +78,7 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
           defaultText(
-              text: 'Show new Banners',
+              text: 'عرض لافتات جديدة',
               size: 16.0,
               fontWeight: FontWeight.w500,
               color: Colors.grey),
@@ -114,7 +115,7 @@ class HomeScreen extends StatelessWidget {
             height: 20.0,
           ),
           defaultText(
-              text: 'Best Selling', size: 20.0, fontWeight: FontWeight.bold),
+              text: 'أفضل مبيعات', size: 20.0, fontWeight: FontWeight.bold),
           const SizedBox(
             height: 10.0,
           ),
@@ -202,11 +203,7 @@ class HomeScreen extends StatelessWidget {
                             const Spacer(),
                             IconButton(
                                 onPressed: () {
-                                  navigateTo(
-                                      context,
-                                      ProductDetails(
-                                        currentIndex: index,
-                                      ));
+                                Navigator.of(context).push(SlideAnimate(page: ProductDetails(currentIndex: index)));
                                 },
                                 icon: const Icon(
                                   EvaIcons.moreVertical,

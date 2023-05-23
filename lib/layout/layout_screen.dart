@@ -21,7 +21,7 @@ class LayoutScreen extends StatelessWidget {
             appBar: AppBar(
               iconTheme: const IconThemeData(color: Colors.deepPurple),
             ),
-            drawer: BuildCondition(
+            endDrawer: BuildCondition(
               condition: ShopCubit.get(context).settingsModel != null &&
                   ShopCubit.get(context).userModel != null,
               builder: (context) => Drawer(
@@ -148,23 +148,23 @@ class LayoutScreen extends StatelessWidget {
                 items: const [
                   BottomNavigationBarItem(
                     icon: Icon(EvaIcons.home),
-                    label: 'Home',
+                    label: 'الرئيسية',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(EvaIcons.shoppingBag),
-                    label: 'Products',
+                    label: 'المنتجات',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.category),
-                    label: 'Category',
+                    label: 'الانواع',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(EvaIcons.star),
-                    label: 'Favorite',
+                    label: 'المفضل',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(EvaIcons.search),
-                    label: 'Search',
+                    label: 'البحث',
                   ),
                 ],
                 onTap: (index) {
@@ -174,13 +174,17 @@ class LayoutScreen extends StatelessWidget {
                 currentIndex: ShopCubit.get(context).currentIndex,
               ),
             ),
-            body: BuildCondition(
-              condition: ShopCubit.get(context).homeModel != null,
-              builder: (context) => ShopCubit.get(context)
-                  .screens[ShopCubit.get(context).currentIndex],
-              fallback: (context) =>
-                  Center(child:  Center(child: LottieBuilder.asset('assets/loader.json',height: 150.0,width: 150.0,)),),
-            ));
+            body: Directionality(
+              textDirection: TextDirection.rtl,
+              child: BuildCondition(
+                condition: ShopCubit.get(context).homeModel != null,
+                builder: (context) => ShopCubit.get(context)
+                    .screens[ShopCubit.get(context).currentIndex],
+                fallback: (context) =>
+                    Center(child:  Center(child: LottieBuilder.asset('assets/loader.json',height: 150.0,width: 150.0,)),),
+              ),
+            )
+        );
       },
     );
   }
